@@ -26,7 +26,7 @@ import java.io.InputStream
       }
   }
 
-  return seek[1]
+  return seek[0]
 }
 
 private fun quickSort(arr: Array<Int>, start: Int, end: Int) {
