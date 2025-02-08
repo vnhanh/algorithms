@@ -4,3 +4,4 @@ This repository stores my algorithmic solutions
 kotlinc test.kt -include-runtime -d test.jar
 2. To run a jar file
 java -jar test.jar
+3. To list changed files with git: git diff --cached --name-only --diff-filter=A
