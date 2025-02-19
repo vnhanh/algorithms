@@ -1,4 +1,5 @@
-fun mySqrt(x: Int): Int {
+// 19ms
+fun mySqrt19(x: Int): Int {
   if (x == 0) return 0
   if (x < 4) return 1
   if (x < 9) return 2
@@ -18,8 +19,31 @@ fun mySqrt(x: Int): Int {
   return i
 }
 
+// 1ms - create my list of input and then test output
+fun mySqrt(x: Int): Int {
+  var m = 0L
+  var n = x.toLong()
+  var i: Long = (x/2).toLong()
+  var l: Long = 0L
+  while(i >= m && i <= n) {
+    if ((i * i).toLong() == x.toLong()) return i.toInt()
+    if ((i * i).toLong() < x.toLong()) {
+      m = i+1
+      l = i
+    } else {
+      n = i-1L
+    }
+    i = (m+n) / 2
+  }
+  return l.toInt()
+}
+
 fun main() {
-  val input = 1085817232
+  // val input = 1085817232
+  val input = 0
   val result = mySqrt(input)
   println(result)
+
+  println(mySqrt(1))
+  println(mySqrt(15))
 }
