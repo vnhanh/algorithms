@@ -25,17 +25,17 @@ fun reverse182(x: Int): Int {
   return r
 }
 
-// 140ms - reduce to run 1 while loop only
+// 138m - 157ms - reduce to run 1 while loop only - 34MB beats 81%
 fun reverse140(x: Int): Int {
   var t = if (x < 0) -x else x
   var i = 0
   var m: Int
   while(t > 0) {
-      if (i > 214_748_364) return 0
+      if (i > Int.MAX_VALUE / 10) return 0
       i = i*10
-      m = i + t%10
-      if (m < i) return 0
-      i = m
+      m = t%10
+      if (i > Int.MAX_VALUE - m) return 0
+      i = i + m
       t = t/10
   }
   if (x < 0) return -i
