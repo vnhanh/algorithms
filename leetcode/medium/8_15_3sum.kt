@@ -1,7 +1,7 @@
 /**
  * Solution 1: 200-253ms
  */
-fun threeSum(nums: IntArray): List<List<Int>> {
+fun threeSum200(nums: IntArray): List<List<Int>> {
   if (nums.size == 3) {
       if (nums[0] + nums[1] + nums[2] == 0) return listOf(nums.toList())
       return emptyList()
@@ -40,6 +40,45 @@ fun binarySearch(nums: IntArray, start: Int, end: Int, target: Int) : Int {
   return -1
 }
 
+/**
+ * Solution 2: (O)n logn
+ */
+fun threeSum(nums: IntArray): List<List<Int>> {
+    if (nums.size == 3) {
+        if (nums[0] + nums[1] + nums[2] == 0) return listOf(nums.toList())
+        return emptyList()
+    }
+    nums.sort()
+
+    val result = mutableListOf<List<Int>>()
+    val n = nums.size
+    var l: Int
+    var h: Int
+    var m: Int
+    
+    for (i in 0..n-3) {
+        l = i+1
+        h = n-1
+        while (l < h) {
+            m = (l + h) / 2
+            when {
+                nums[l] + nums[h] > -nums[i] -> h = m - 1
+                nums[l] + nums[h] < -nums[i] -> l = m + 1
+                else -> {
+                    result.add(listOf(nums[i], nums[l], nums[h]))
+
+                    l++
+                    h--
+                    while (l < h && nums[l] == nums[l-1]) l++
+                    while (l < h && nums[h] == nums[h+1]) h--
+                }
+            }
+        }
+    }
+
+    return result
+}
+
 fun main() {
-  
+  println(threeSum(intArrayOf(-1,0,1,2,-1,-4)).joinToString("-"))
 }
