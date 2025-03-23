@@ -79,6 +79,105 @@ fun threeSum(nums: IntArray): List<List<Int>> {
     return result
 }
 
+/**
+ * Solution 2: 92ms (lower-midrange)
+ */
+fun threeSum92(nums: IntArray): List<List<Int>> {
+    if (nums.size == 3) {
+        if (nums[0] + nums[1] + nums[2] == 0) return listOf(nums.toList())
+        return emptyList()
+    }
+    nums.sort()
+
+    val result = mutableListOf<List<Int>>()
+    val n = nums.size
+    var l: Int
+    var h: Int
+    
+    for (i in 0..n-3) {
+        if (i > 0 && nums[i] == nums[i-1]) continue
+        l = i+1
+        h = n-1
+        while (l < h) {
+            when {
+                nums[l] + nums[h] < -nums[i] -> {
+                    do {
+                        l++
+                    } while (l < h && nums[l] == nums[l-1])
+                }
+                nums[l] + nums[h] > -nums[i] -> {
+                    do {
+                        h--
+                    } while (l < h && nums[h] == nums[h+1])
+                }
+                else -> {
+                    result.add(listOf(nums[i], nums[l], nums[h]))
+                    do {
+                        l++
+                    } while (l < h && nums[l] == nums[l-1])
+                    do {
+                        h--
+                    } while (l < h && nums[h] == nums[h+1])
+                }
+            }
+        }
+    }
+
+    return result
+}
+
+/**
+ * Solution 2 with better code for filter input data, it works well with the test samples
+ */
+fun threeSum77(nums: IntArray): List<List<Int>> {
+    if (nums.size == 3) {
+        if (nums[0] + nums[1] + nums[2] == 0) return listOf(nums.toList())
+        return emptyList()
+    }
+    nums.sort()
+
+    val result = mutableListOf<List<Int>>()
+    val n = nums.size
+    var l: Int
+    var h: Int
+    val min = nums[0] + nums[1]
+    val max = nums[n-1] + nums[n-2]
+    
+    for (i in 0..n-3) {
+        if (i > 0 && nums[i] == nums[i-1]) continue
+        if (-nums[i] < min || -nums[i] > max) continue
+        if (nums[i] + nums[i+1] + nums[i+2] > 0) break 
+        l = i+1
+        h = n-1
+
+        while (l < h) {
+            when {
+                nums[l] + nums[h] < -nums[i] -> {
+                    do {
+                        l++
+                    } while (l < h && nums[l] == nums[l-1])
+                }
+                nums[l] + nums[h] > -nums[i] -> {
+                    do {
+                        h--
+                    } while (l < h && nums[h] == nums[h+1])
+                }
+                else -> {
+                    result.add(listOf(nums[i], nums[l], nums[h]))
+                    do {
+                        l++
+                    } while (l < h && nums[l] == nums[l-1])
+                    do {
+                        h--
+                    } while (l < h && nums[h] == nums[h+1])
+                }
+            }
+        }
+    }
+
+    return result
+}
+
 fun main() {
   println(threeSum(intArrayOf(-1,0,1,2,-1,-4)).joinToString("-"))
 }
