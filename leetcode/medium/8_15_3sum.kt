@@ -178,6 +178,47 @@ fun threeSum77(nums: IntArray): List<List<Int>> {
     return result
 }
 
+// This one improve by applying ArrayList instead of List, remove checking min
+fun threeSum45(nums: IntArray): List<List<Int>> {
+    nums.sort()
+
+    val result = ArrayList<ArrayList<Int>>()
+    val n = nums.size
+    
+    val max = nums[n-1] + nums[n-2]
+    
+    for (i in 0..n-3) {
+        if (i > 0 && nums[i] == nums[i-1]) continue
+        if (-nums[i] > max) continue
+        if (nums[i] + nums[i+1] + nums[i+2] > 0) break 
+        var l = i+1
+        var h = n-1
+
+        while (l < h) {
+            when {
+                nums[l] + nums[h] < -nums[i] -> {
+                    l++
+                }
+                nums[l] + nums[h] > -nums[i] -> {
+                    h--
+                }
+                else -> {
+                    val nl = ArrayList<Int>().apply {
+                        add(nums[i])
+                        add(nums[l++])
+                        add(nums[h--])
+                    }
+                    result.add(nl)
+                    while (l < h && nums[l] == nums[l-1]) l++
+                    while (l < h && nums[h] == nums[h+1]) h--
+                }
+            }
+        }
+    }
+
+    return result
+}
+
 fun main() {
   println(threeSum(intArrayOf(-1,0,1,2,-1,-4)).joinToString("-"))
 }
