@@ -36,6 +36,32 @@ fun letterCombinations4(digits: String): List<String> {
   return res
 }
 
+/**
+ * Solution 2: 1ms - use Array for faster than Map
+ */
+val map = arrayOf("abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz")
+
+fun letterCombinations1(digits: String): List<String> {
+    val res: ArrayList<String> = arrayListOf()
+    val t: ArrayList<String> = arrayListOf()
+    for (d in digits) {
+        val pos = d - '2'
+        for (c in map[pos]) {
+            if (res.isEmpty()) {
+                t.add(c.toString())
+            } else {
+                for (str in res) {
+                    t.add(str + c.toString())
+                }
+            }
+        }
+        res.clear()
+        res.addAll(t)
+        t.clear()
+    }
+    return res
+}
+
 fun main() {
 
 }
